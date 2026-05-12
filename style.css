@@ -210,26 +210,19 @@ button {
 
   border: 6px solid #000;
 
-  background: linear-gradient(
-    #ffffff,
-    var(--sky)
-  );
+  background: #ffffff;
 
   color: #111;
 
   font-size:
     clamp(18px, 4vw, 24px);
 
-  box-shadow:
-    6px 6px 0 #000;
+  box-shadow: none;
 }
 
 .menuBtn.sub {
 
-  background: linear-gradient(
-    #ffffff,
-    #dddddd
-  );
+  background: #ffffff;
 }
 
 /* ---------- */
@@ -431,7 +424,7 @@ button {
   bottom:
     calc(
       env(safe-area-inset-bottom)
-      + 48px
+      + 86px
     );
 
   width: 100%;
@@ -527,7 +520,7 @@ button:active {
   font-size:
     clamp(34px, 8vw, 48px);
 
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 
   text-align: center;
 
@@ -539,9 +532,9 @@ button:active {
 #resultImage {
 
   width:
-    min(42vw, 150px);
+    min(58vw, 220px);
 
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 
   image-rendering: pixelated;
 }
@@ -553,14 +546,15 @@ button:active {
   font-size:
     clamp(18px, 5vw, 24px);
 
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 
   text-align: center;
 }
 
 .resultButtons {
 
-  width: 100%;
+  width:
+    min(72vw, 300px);
 
   display: flex;
 
@@ -584,7 +578,8 @@ button:active {
 
   #resultImage {
 
-    width: 120px;
+    width:
+      min(50vw, 180px);
   }
 
   .menuBtn {
@@ -597,7 +592,7 @@ button:active {
     bottom:
       calc(
         env(safe-area-inset-bottom)
-        + 32px
+        + 64px
       );
   }
 
@@ -619,7 +614,7 @@ button:active {
     bottom:
       calc(
         env(safe-area-inset-bottom)
-        + 20px
+        + 48px
       );
   }
 
@@ -635,6 +630,7 @@ button:active {
 
   #resultImage {
 
-    width: 96px;
+    width:
+      min(46vw, 150px);
   }
 }
