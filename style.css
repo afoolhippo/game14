@@ -1,15 +1,14 @@
-@import url("https://fonts.googleapis.com/css2?family=DotGothic16&display=swap");
-
 :root {
 
-  --sky: #4cc7ff;
-  --sky2: #dff9ff;
+  --sky: #74d9ff;
+
+  --sky2: #dff8ff;
 
   --yellow: #ffe600;
 
   --dark: #07131c;
 
-  --pink: #ff52c8;
+  --pink: #ff5acb;
 }
 
 * {
@@ -19,10 +18,10 @@
 
   box-sizing: border-box;
 
-  touch-action: manipulation;
-
   user-select: none;
   -webkit-user-select: none;
+
+  touch-action: manipulation;
 }
 
 html,
@@ -33,7 +32,7 @@ body {
 
   overflow: hidden;
 
-  background: var(--dark);
+  background: #000;
 
   font-family: "DotGothic16", monospace;
 }
@@ -54,6 +53,38 @@ button {
 }
 
 /* ---------- */
+/* LOADING */
+/* ---------- */
+
+#loadingScreen {
+
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 9999;
+
+  background: #000;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+}
+
+.loadingBox {
+
+  border: 6px solid #fff;
+
+  padding: 24px 36px;
+
+  color: white;
+
+  font-size: 28px;
+}
+
+/* ---------- */
 /* SCREEN */
 /* ---------- */
 
@@ -63,12 +94,10 @@ button {
 
   inset: 0;
 
-  width: 100%;
-  height: 100%;
-
   display: none;
 
-  overflow: hidden;
+  width: 100%;
+  height: 100%;
 }
 
 .screen.active {
@@ -77,106 +106,80 @@ button {
 }
 
 /* ---------- */
-/* TITLE */
+/* TITLE / RESULT */
 /* ---------- */
 
 #titleScreen,
 #resultScreen {
 
-  background:
-    linear-gradient(
-      rgba(76,199,255,0.2),
-      rgba(0,0,0,0.65)
-    ),
-    url("assets/stage_nasu.png")
-    center / cover
-    no-repeat;
+  background: var(--sky2);
 }
 
 .menuBox {
 
-  position: absolute;
+  width: min(92vw, 420px);
 
-  left: 50%;
-  top: 50%;
+  margin: 18px auto 0;
 
-  transform:
-    translate(-50%, -50%);
+  padding: 18px;
 
-  width:
-    min(92vw, 430px);
+  border: 6px solid #000;
 
-  padding:
-    24px 18px;
+  background: white;
+
+  box-shadow: 8px 8px 0 #000;
 
   text-align: center;
-
-  border:
-    6px solid #000;
-
-  border-radius: 24px;
-
-  background:
-    rgba(223,249,255,0.95);
-
-  box-shadow:
-    8px 8px 0 #000;
 }
 
 #titleLogo {
 
   width: 100%;
 
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 
   image-rendering: pixelated;
 }
 
 .ruleText {
 
-  color: #111;
-
   font-size: 20px;
 
   line-height: 1.6;
 
-  margin-bottom: 18px;
+  color: #111;
+
+  margin-bottom: 12px;
 }
 
 .menuBtn {
 
   width: 100%;
 
-  min-height: 84px;
+  min-height: 82px;
 
   margin-top: 14px;
 
-  border:
-    6px solid #000;
+  border: 6px solid #000;
 
-  border-radius: 20px;
+  background: linear-gradient(
+    #ffffff,
+    var(--sky)
+  );
 
-  background:
-    linear-gradient(
-      #ffffff,
-      var(--sky)
-    );
-
-  color: #07131c;
+  color: #111;
 
   font-size: 24px;
 
-  box-shadow:
-    6px 7px 0 #000;
+  box-shadow: 6px 6px 0 #000;
 }
 
 .menuBtn.sub {
 
-  background:
-    linear-gradient(
-      #ffffff,
-      #d8d8d8
-    );
+  background: linear-gradient(
+    #ffffff,
+    #dddddd
+  );
 }
 
 /* ---------- */
@@ -202,7 +205,7 @@ button {
 
   position: absolute;
 
-  top: 8px;
+  top: 10px;
   left: 0;
 
   width: 100%;
@@ -230,7 +233,7 @@ button {
 
   color: var(--yellow);
 
-  font-size: 23px;
+  font-size: 24px;
 
   text-shadow:
     3px 3px 0 #000,
@@ -250,30 +253,26 @@ button {
 
   height: 46px;
 
-  line-height: 36px;
-
-  text-align: center;
-
-  color: white;
+  line-height: 38px;
 
   background: #111;
 
-  border:
-    5px solid var(--yellow);
+  color: white;
+
+  text-align: center;
+
+  border: 5px solid var(--yellow);
 
   font-size: 30px;
-
-  box-shadow:
-    0 0 0 3px #000;
 }
 
 .hpRow {
 
-  margin-top: 5px;
-
   display: flex;
 
   justify-content: space-between;
+
+  margin-top: 6px;
 }
 
 .hpBox {
@@ -284,12 +283,7 @@ button {
 
   background: #320000;
 
-  border:
-    5px solid #000;
-
-  box-shadow:
-    0 0 0 2px var(--yellow),
-    4px 4px 0 #000;
+  border: 5px solid #000;
 }
 
 .hpFill {
@@ -297,28 +291,24 @@ button {
   width: 100%;
   height: 100%;
 
-  background:
-    linear-gradient(
-      to right,
-      #fff36a,
-      #ffe600,
-      #ff8a00,
-      #ff2d2d
-    );
+  background: linear-gradient(
+    to right,
+    #fff36a,
+    #ffe600,
+    #ff8a00,
+    #ff2d2d
+  );
 }
 
 .enemyHp {
 
-  margin-left: auto;
-
-  background:
-    linear-gradient(
-      to left,
-      #fff36a,
-      #ffe600,
-      #ff8a00,
-      #ff2d2d
-    );
+  background: linear-gradient(
+    to left,
+    #fff36a,
+    #ffe600,
+    #ff8a00,
+    #ff2d2d
+  );
 }
 
 /* ---------- */
@@ -329,26 +319,20 @@ button {
 
   position: absolute;
 
-  top: 92px;
+  top: 104px;
   right: 10px;
 
-  z-index: 20;
+  z-index: 30;
 
-  padding:
-    10px 14px;
+  padding: 10px 14px;
 
-  border:
-    4px solid #000;
+  border: 4px solid #000;
 
-  border-radius: 14px;
+  background: white;
 
-  background:
-    rgba(255,255,255,0.9);
+  font-size: 16px;
 
-  font-size: 15px;
-
-  box-shadow:
-    4px 4px 0 #000;
+  box-shadow: 4px 4px 0 #000;
 }
 
 /* ---------- */
@@ -359,7 +343,7 @@ button {
 
   position: absolute;
 
-  top: 34%;
+  top: 28%;
 
   width: 100%;
 
@@ -367,7 +351,7 @@ button {
 
   color: var(--yellow);
 
-  font-size: 58px;
+  font-size: 54px;
 
   z-index: 30;
 
@@ -381,25 +365,30 @@ button {
 }
 
 /* ---------- */
-/* BUTTONS */
+/* CONTROLS */
 /* ---------- */
 
 #controls {
 
   position: absolute;
 
-  bottom: 18px;
   left: 0;
 
+  bottom:
+    calc(
+      env(safe-area-inset-bottom)
+      + 72px
+    );
+
   width: 100%;
+
+  padding: 0 10px;
 
   display: flex;
 
   justify-content: space-between;
 
   align-items: flex-end;
-
-  padding: 0 10px;
 
   z-index: 25;
 }
@@ -415,27 +404,23 @@ button {
 .controlBtn {
 
   min-width: 100px;
+
   min-height: 92px;
 
   padding: 12px;
 
-  border:
-    6px solid #000;
+  border: 6px solid #000;
 
-  border-radius: 20px;
+  background: linear-gradient(
+    #ffffff,
+    var(--sky)
+  );
 
-  background:
-    linear-gradient(
-      #ffffff,
-      var(--sky)
-    );
-
-  color: #07131c;
+  color: #111;
 
   font-size: 24px;
 
-  box-shadow:
-    6px 7px 0 #000;
+  box-shadow: 6px 6px 0 #000;
 }
 
 .dirBtn {
@@ -447,29 +432,25 @@ button {
 
 #punchBtn {
 
-  background:
-    linear-gradient(
-      #fff7b8,
-      #ffad26
-    );
+  background: linear-gradient(
+    #fff7b8,
+    #ffad26
+  );
 }
 
 .dashBtn {
 
-  background:
-    linear-gradient(
-      #ffd6f4,
-      var(--pink)
-    );
+  background: linear-gradient(
+    #ffd6f4,
+    var(--pink)
+  );
 }
 
 button:active {
 
-  transform:
-    translate(4px,5px);
+  transform: translate(4px,4px);
 
-  box-shadow:
-    2px 2px 0 #000;
+  box-shadow: 2px 2px 0 #000;
 }
 
 /* ---------- */
@@ -493,7 +474,7 @@ button:active {
 
   width: 180px;
 
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 
   image-rendering: pixelated;
 }
@@ -502,7 +483,7 @@ button:active {
 
   color: #111;
 
-  font-size: 22px;
+  font-size: 24px;
 
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }

@@ -1,25 +1,47 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
+<meta charset="UTF-8" />
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, user-scalable=no"
-  />
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1,user-scalable=no"
+/>
 
-  <title>カバファイト</title>
+<title>カバファイト</title>
 
-  <link rel="stylesheet" href="style.css" />
+<link
+  rel="preconnect"
+  href="https://fonts.googleapis.com"
+/>
+
+<link
+  rel="preconnect"
+  href="https://fonts.gstatic.com"
+  crossorigin
+/>
+
+<link
+  href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap"
+  rel="stylesheet"
+/>
+
+<link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
 
+<div id="loadingScreen">
+  <div class="loadingBox">
+    <p>LOADING...</p>
+  </div>
+</div>
+
 <div id="app">
 
-  <!-- タイトル -->
+  <!-- TITLE -->
 
-  <section id="titleScreen" class="screen active">
+  <section id="titleScreen" class="screen">
 
     <div class="menuBox">
 
@@ -34,7 +56,10 @@
         ナス・トマト・歯をぶっとばせ！
       </p>
 
-      <button id="startBtn" class="menuBtn">
+      <button
+        id="startBtn"
+        class="menuBtn"
+      >
         タップしてスタート
       </button>
 
@@ -42,7 +67,7 @@
 
   </section>
 
-  <!-- ゲーム -->
+  <!-- GAME -->
 
   <section id="gameScreen" class="screen">
 
@@ -51,8 +76,6 @@
       width="360"
       height="640"
     ></canvas>
-
-    <!-- HUD -->
 
     <div id="battleHud">
 
@@ -63,7 +86,7 @@
         </div>
 
         <div id="timer">
-          30
+          45
         </div>
 
         <div
@@ -95,7 +118,7 @@
 
     <div id="battleMessage"></div>
 
-    <!-- ボタン -->
+    <!-- CONTROLS -->
 
     <div id="controls">
 
@@ -139,7 +162,7 @@
 
   </section>
 
-  <!-- 結果 -->
+  <!-- RESULT -->
 
   <section id="resultScreen" class="screen">
 
@@ -156,20 +179,29 @@
       />
 
       <p id="resultText">
-        全3ステージクリア！
+        ALL CLEAR!!
       </p>
 
       <div class="resultButtons">
 
-        <button id="shareBtn" class="menuBtn">
+        <button
+          id="shareBtn"
+          class="menuBtn"
+        >
           Xでシェア
         </button>
 
-        <button id="retryBtn" class="menuBtn">
+        <button
+          id="retryBtn"
+          class="menuBtn"
+        >
           もう1回遊ぶ
         </button>
 
-        <button id="homeBtn" class="menuBtn sub">
+        <button
+          id="homeBtn"
+          class="menuBtn sub"
+        >
           カバゲーセンへ
         </button>
 
