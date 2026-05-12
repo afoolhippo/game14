@@ -33,12 +33,14 @@
 
 <body>
 
+<!-- LOADING -->
+
 <div id="loadingScreen">
 
   <div class="loadingBox">
 
     <p class="loadingText">
-      NOW LOADING...
+      POWER LOADING!!
     </p>
 
     <div class="loadingBar">
@@ -54,7 +56,7 @@
       id="loadingCount"
       class="loadingCount"
     >
-      0%
+      HP 0%
     </p>
 
   </div>
@@ -62,6 +64,8 @@
 </div>
 
 <div id="app">
+
+  <!-- TITLE -->
 
   <section
     id="titleScreen"
@@ -93,6 +97,8 @@
 
   </section>
 
+  <!-- GAME -->
+
   <section
     id="gameScreen"
     class="screen"
@@ -103,6 +109,8 @@
       width="360"
       height="640"
     ></canvas>
+
+    <!-- HUD -->
 
     <div id="battleHud">
 
@@ -151,6 +159,8 @@
 
     <div id="battleMessage"></div>
 
+    <!-- CONTROLS -->
+
     <div id="controls">
 
       <div class="moveButtons">
@@ -193,6 +203,8 @@
 
   </section>
 
+  <!-- RESULT -->
+
   <section
     id="resultScreen"
     class="screen"
@@ -204,11 +216,11 @@
         ALL CLEAR!!
       </h2>
 
-      <canvas
-        id="resultCanvas"
-        width="128"
-        height="128"
-      ></canvas>
+      <img
+        id="resultImage"
+        src="assets/result_win.png"
+        alt=""
+      />
 
       <p id="resultText">
         全3ステージクリア！

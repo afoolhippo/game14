@@ -71,7 +71,23 @@ const seLose = new Audio("assets/se_lose.mp3");
 
 const bgm = new Audio();
 bgm.loop = true;
-bgm.volume = 0.25;
+seSelect.volume = 0.45;
+
+sePunch.volume = 0.28;
+
+seHit.volume = 0.42;
+
+seFight.volume = 0.55;
+
+seRound1.volume = 0.55;
+seRound2.volume = 0.55;
+seRound3.volume = 0.55;
+
+seWin.volume = 0.6;
+
+seLose.volume = 0.6;
+
+bgm.volume = 0.32;
 
 /* ---------- */
 /* IMAGE */
@@ -117,7 +133,7 @@ let stageIndex = 0;
 const COLS = 4;
 const ROWS = 3;
 const SCALE = 0.38;
-const GROUND_Y = 500;
+const GROUND_Y = 470;
 
 /*
   4列×3行のスプライトシート。
