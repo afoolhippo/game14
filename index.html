@@ -40,15 +40,24 @@
   <div class="loadingBox">
 
     <p class="loadingText">
-      NOW LOADING
-      <span class="dots"></span>
+      POWER LOADING!!
     </p>
 
     <div class="loadingBar">
 
-      <div class="loadingFill"></div>
+      <div
+        id="loadingFill"
+        class="loadingFill"
+      ></div>
 
     </div>
+
+    <p
+      id="loadingCount"
+      class="loadingCount"
+    >
+      HP 0%
+    </p>
 
   </div>
 
@@ -72,8 +81,9 @@
       />
 
       <p class="ruleText">
-        カバを操作して<br>
-        ナス・トマト・歯をぶっとばせ！
+        間合いを読んで一撃勝負！<br>
+        ナス・トマト・歯を<br>
+        カバパンチでぶっとばせ！
       </p>
 
       <button
@@ -126,11 +136,17 @@
       <div class="hpRow">
 
         <div class="hpBox">
-          <div id="playerHp" class="hpFill"></div>
+          <div
+            id="playerHp"
+            class="hpFill"
+          ></div>
         </div>
 
         <div class="hpBox">
-          <div id="enemyHp" class="hpFill enemyHp"></div>
+          <div
+            id="enemyHp"
+            class="hpFill enemyHp"
+          ></div>
         </div>
 
       </div>
@@ -197,7 +213,7 @@
     <div class="menuBox">
 
       <h2 id="resultTitle">
-        YOU WIN!!
+        ALL CLEAR!!
       </h2>
 
       <img
@@ -207,7 +223,7 @@
       />
 
       <p id="resultText">
-        ALL CLEAR!!
+        全3ステージクリア！
       </p>
 
       <div class="resultButtons">

@@ -1,266 +1,110 @@
-const canvas =
-  document.getElementById(
-    "gameCanvas"
-  );
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
 
-const ctx =
-  canvas.getContext("2d");
-
-ctx.imageSmoothingEnabled =
-  false;
+ctx.imageSmoothingEnabled = false;
 
 /* ---------- */
 /* SCREEN */
 /* ---------- */
 
-const loadingScreen =
-  document.getElementById(
-    "loadingScreen"
-  );
+const loadingScreen = document.getElementById("loadingScreen");
+const titleScreen = document.getElementById("titleScreen");
+const gameScreen = document.getElementById("gameScreen");
+const resultScreen = document.getElementById("resultScreen");
 
-const titleScreen =
-  document.getElementById(
-    "titleScreen"
-  );
+/* ---------- */
+/* LOADING UI */
+/* ---------- */
 
-const gameScreen =
-  document.getElementById(
-    "gameScreen"
-  );
-
-const resultScreen =
-  document.getElementById(
-    "resultScreen"
-  );
+const loadingFill = document.getElementById("loadingFill");
+const loadingCount = document.getElementById("loadingCount");
 
 /* ---------- */
 /* BUTTON */
 /* ---------- */
 
-const startBtn =
-  document.getElementById(
-    "startBtn"
-  );
+const startBtn = document.getElementById("startBtn");
+const retryBtn = document.getElementById("retryBtn");
+const homeBtn = document.getElementById("homeBtn");
+const shareBtn = document.getElementById("shareBtn");
+const backBtn = document.getElementById("backBtn");
 
-const retryBtn =
-  document.getElementById(
-    "retryBtn"
-  );
-
-const homeBtn =
-  document.getElementById(
-    "homeBtn"
-  );
-
-const shareBtn =
-  document.getElementById(
-    "shareBtn"
-  );
-
-const backBtn =
-  document.getElementById(
-    "backBtn"
-  );
-
-const leftBtn =
-  document.getElementById(
-    "leftBtn"
-  );
-
-const rightBtn =
-  document.getElementById(
-    "rightBtn"
-  );
-
-const punchBtn =
-  document.getElementById(
-    "punchBtn"
-  );
-
-const dashBtn =
-  document.getElementById(
-    "dashBtn"
-  );
+const leftBtn = document.getElementById("leftBtn");
+const rightBtn = document.getElementById("rightBtn");
+const punchBtn = document.getElementById("punchBtn");
+const dashBtn = document.getElementById("dashBtn");
 
 /* ---------- */
 /* HUD */
 /* ---------- */
 
-const playerHpEl =
-  document.getElementById(
-    "playerHp"
-  );
-
-const enemyHpEl =
-  document.getElementById(
-    "enemyHp"
-  );
-
-const timerEl =
-  document.getElementById(
-    "timer"
-  );
-
-const battleMessage =
-  document.getElementById(
-    "battleMessage"
-  );
-
-const enemyName =
-  document.getElementById(
-    "enemyName"
-  );
+const playerHpEl = document.getElementById("playerHp");
+const enemyHpEl = document.getElementById("enemyHp");
+const timerEl = document.getElementById("timer");
+const battleMessage = document.getElementById("battleMessage");
+const enemyName = document.getElementById("enemyName");
 
 /* ---------- */
 /* RESULT */
 /* ---------- */
 
-const resultTitle =
-  document.getElementById(
-    "resultTitle"
-  );
+const resultTitle = document.getElementById("resultTitle");
+const resultText = document.getElementById("resultText");
+const resultImage = document.getElementById("resultImage");
 
-const resultText =
-  document.getElementById(
-    "resultText"
-  );
-
-const resultImage =
-  document.getElementById(
-    "resultImage"
-  );
+const RESULT_WIN_IMAGE = "assets/result_win.png";
+const RESULT_LOSE_IMAGE = "assets/result_lose.png";
 
 /* ---------- */
 /* AUDIO */
 /* ---------- */
 
-const seSelect =
-  new Audio(
-    "assets/se_select.mp3"
-  );
+const seSelect = new Audio("assets/se_select.mp3");
+const sePunch = new Audio("assets/se_punch.mp3");
+const seHit = new Audio("assets/se_hit.mp3");
+const seFight = new Audio("assets/se_fight.mp3");
+const seRound1 = new Audio("assets/se_round1.mp3");
+const seRound2 = new Audio("assets/se_round2.mp3");
+const seRound3 = new Audio("assets/se_round3.mp3");
+const seWin = new Audio("assets/se_win.mp3");
+const seLose = new Audio("assets/se_lose.mp3");
 
-const sePunch =
-  new Audio(
-    "assets/se_punch.mp3"
-  );
-
-const seHit =
-  new Audio(
-    "assets/se_hit.mp3"
-  );
-
-const seFight =
-  new Audio(
-    "assets/se_fight.mp3"
-  );
-
-const seRound1 =
-  new Audio(
-    "assets/se_round1.mp3"
-  );
-
-const seRound2 =
-  new Audio(
-    "assets/se_round2.mp3"
-  );
-
-const seRound3 =
-  new Audio(
-    "assets/se_round3.mp3"
-  );
-
-const seWin =
-  new Audio(
-    "assets/se_win.mp3"
-  );
-
-const seLose =
-  new Audio(
-    "assets/se_lose.mp3"
-  );
-
-/* ---------- */
-/* BGM */
-/* ---------- */
-
-const bgm =
-  new Audio();
-
+const bgm = new Audio();
 bgm.loop = true;
-
 bgm.volume = 0.25;
 
 /* ---------- */
 /* IMAGE */
 /* ---------- */
 
-const hippoSheet =
-  new Image();
+const hippoSheet = new Image();
+hippoSheet.src = "assets/hippo_sheet.png";
 
-hippoSheet.src =
-  "assets/hippo_sheet.png";
-
-const stageImg =
-  new Image();
-
-const enemySheet =
-  new Image();
+const stageImg = new Image();
+const enemySheet = new Image();
 
 /* ---------- */
 /* STAGE */
 /* ---------- */
 
 const stages = [
-
   {
-
     name: "NASU",
-
-    sprite:
-      "assets/nasu_sheet.png",
-
-    bg:
-      "assets/stage_nasu.png",
-
-    bgm:
-      "assets/bgm_nasu.mp3",
-
-    result:
-      "assets/result_lose.png"
+    sprite: "assets/nasu_sheet.png",
+    bg: "assets/stage_nasu.png",
+    bgm: "assets/bgm_nasu.mp3"
   },
-
   {
-
     name: "TOMATO",
-
-    sprite:
-      "assets/tomato_sheet.png",
-
-    bg:
-      "assets/stage_tomato.png",
-
-    bgm:
-      "assets/bgm_tomato.mp3",
-
-    result:
-      "assets/result_lose2.png"
+    sprite: "assets/tomato_sheet.png",
+    bg: "assets/stage_tomato.png",
+    bgm: "assets/bgm_tomato.mp3"
   },
-
   {
-
     name: "TOOTH",
-
-    sprite:
-      "assets/tooth_sheet.png",
-
-    bg:
-      "assets/stage_tooth.png",
-
-    bgm:
-      "assets/bgm_tooth.mp3",
-
-    result:
-      "assets/result_lose3.png"
+    sprite: "assets/tooth_sheet.png",
+    bg: "assets/stage_tooth.png",
+    bgm: "assets/bgm_tooth.mp3"
   }
 ];
 
@@ -271,11 +115,8 @@ let stageIndex = 0;
 /* ---------- */
 
 const COLS = 4;
-
 const ROWS = 3;
-
 const SCALE = 0.38;
-
 const GROUND_Y = 500;
 
 /* ---------- */
@@ -283,43 +124,28 @@ const GROUND_Y = 500;
 /* ---------- */
 
 let timer = 45;
-
 let gameOver = true;
-
 let running = false;
-
 let battleActive = false;
-
 let timerInterval = null;
-
 let animCounter = 0;
-
 let stopFrame = 0;
-
 let dashCooldown = false;
+let messageToken = 0;
 
 /* ---------- */
 /* PLAYER */
 /* ---------- */
 
 const player = {
-
   x: 40,
-
   y: GROUND_Y,
-
   hp: 100,
-
   facing: 1,
-
   attacking: false,
-
   special: false,
-
   hit: false,
-
   frame: 0,
-
   anim: "idle"
 };
 
@@ -328,49 +154,34 @@ const player = {
 /* ---------- */
 
 const enemy = {
-
   x: 250,
-
   y: GROUND_Y,
-
   hp: 100,
-
   facing: -1,
-
   attacking: false,
-
   special: false,
-
   hit: false,
-
   frame: 0,
-
   anim: "idle",
-
   cooldown: 0
 };
 
+/* ---------- */
+/* ANIMATION */
+/* ---------- */
+
 const animations = {
-
-  idle: [0,1],
-
-  walk: [2,3],
-
+  idle: [0, 1],
+  walk: [2, 3],
   attack: [5],
-
   special: [6],
-
   hit: [7],
-
   down: [8],
-
   win: [9]
 };
 
 const keys = {
-
   left: false,
-
   right: false
 };
 
@@ -378,23 +189,31 @@ const keys = {
 /* SCREEN */
 /* ---------- */
 
-function showScreen(screen){
+function showScreen(screen) {
+  titleScreen.classList.remove("active");
+  gameScreen.classList.remove("active");
+  resultScreen.classList.remove("active");
 
-  titleScreen.classList.remove(
-    "active"
-  );
+  screen.classList.add("active");
+}
 
-  gameScreen.classList.remove(
-    "active"
-  );
+/* ---------- */
+/* AUDIO HELPERS */
+/* ---------- */
 
-  resultScreen.classList.remove(
-    "active"
-  );
+function playSe(se) {
+  se.currentTime = 0;
+  se.play().catch(() => {});
+}
 
-  screen.classList.add(
-    "active"
-  );
+function stopBgm() {
+  bgm.pause();
+  bgm.currentTime = 0;
+}
+
+function startBgm() {
+  bgm.currentTime = 0;
+  bgm.play().catch(() => {});
 }
 
 /* ---------- */
@@ -402,11 +221,9 @@ function showScreen(screen){
 /* ---------- */
 
 const preloadList = [
-
   "assets/title.png",
 
   "assets/hippo_sheet.png",
-
   "assets/nasu_sheet.png",
   "assets/tomato_sheet.png",
   "assets/tooth_sheet.png",
@@ -415,80 +232,80 @@ const preloadList = [
   "assets/stage_tomato.png",
   "assets/stage_tooth.png",
 
-  "assets/result_win.png",
-  "assets/result_lose.png",
-  "assets/result_lose2.png",
-  "assets/result_lose3.png",
+  RESULT_WIN_IMAGE,
+  RESULT_LOSE_IMAGE,
 
   "assets/bgm_nasu.mp3",
   "assets/bgm_tomato.mp3",
-  "assets/bgm_tooth.mp3"
+  "assets/bgm_tooth.mp3",
+
+  "assets/se_select.mp3",
+  "assets/se_punch.mp3",
+  "assets/se_hit.mp3",
+  "assets/se_fight.mp3",
+  "assets/se_round1.mp3",
+  "assets/se_round2.mp3",
+  "assets/se_round3.mp3",
+  "assets/se_win.mp3",
+  "assets/se_lose.mp3"
 ];
 
-function preloadAssets(){
+function updateLoadingProgress(done, total) {
+  const percent = Math.floor((done / total) * 100);
+
+  if (loadingFill) {
+    loadingFill.style.width = percent + "%";
+  }
+
+  if (loadingCount) {
+    loadingCount.textContent = `HP ${percent}%`;
+  }
+}
+
+function preloadAssets() {
+  let loaded = 0;
+  const total = preloadList.length;
+
+  updateLoadingProgress(0, total);
 
   return Promise.all(
+    preloadList.map(src => {
+      return new Promise(resolve => {
+        let finished = false;
 
-    preloadList.map(src=>{
+        const finish = () => {
+          if (finished) return;
 
-      return new Promise(resolve=>{
+          finished = true;
+          loaded++;
 
-        if(src.endsWith(".mp3")){
+          updateLoadingProgress(loaded, total);
+          resolve();
+        };
 
-          const audio =
-            new Audio();
+        if (src.endsWith(".mp3")) {
+          const audio = new Audio();
 
           audio.src = src;
+          audio.preload = "auto";
 
-          audio.preload =
-            "auto";
+          audio.addEventListener("loadeddata", finish, { once: true });
+          audio.addEventListener("canplay", finish, { once: true });
+          audio.addEventListener("error", finish, { once: true });
 
-          const done =
-            ()=>resolve();
-
-          audio.addEventListener(
-            "loadeddata",
-            done,
-            { once:true }
-          );
-
-          audio.addEventListener(
-            "canplay",
-            done,
-            { once:true }
-          );
-
-          audio.addEventListener(
-            "error",
-            done,
-            { once:true }
-          );
-
-          setTimeout(
-            resolve,
-            1200
-          );
+          setTimeout(finish, 1200);
 
           audio.load();
+        } else {
+          const img = new Image();
 
-        }else{
-
-          const img =
-            new Image();
-
-          img.onload =
-            resolve;
-
-          img.onerror =
-            resolve;
+          img.onload = finish;
+          img.onerror = finish;
 
           img.src = src;
         }
-
       });
-
     })
-
   );
 }
 
@@ -496,37 +313,26 @@ function preloadAssets(){
 /* STAGE */
 /* ---------- */
 
-function loadStage(){
+function loadStage() {
+  const s = stages[stageIndex];
 
-  const s =
-    stages[stageIndex];
+  enemyName.textContent = s.name;
 
-  enemyName.textContent =
-    s.name;
-
-  enemySheet.src =
-    s.sprite;
-
-  stageImg.src =
-    s.bg;
-
-  bgm.src =
-    s.bgm;
+  enemySheet.src = s.sprite;
+  stageImg.src = s.bg;
+  bgm.src = s.bgm;
 }
 
 /* ---------- */
 /* START */
 /* ---------- */
 
-function startGame(){
+function startGame() {
+  playSe(seSelect);
 
-  seSelect.currentTime = 0;
+  stageIndex = 0;
 
-  seSelect.play();
-
-  showScreen(
-    gameScreen
-  );
+  showScreen(gameScreen);
 
   resetGame();
 }
@@ -535,241 +341,183 @@ function startGame(){
 /* RESET */
 /* ---------- */
 
-function resetGame(){
-
+function resetGame() {
   loadStage();
 
   timer = 45;
-
-  timerEl.textContent =
-    timer;
+  timerEl.textContent = timer;
 
   gameOver = false;
-
   running = false;
-
   battleActive = false;
+  dashCooldown = false;
 
   player.hp = 100;
-
   enemy.hp = 100;
 
   player.x = 40;
-
   enemy.x = 250;
 
-  player.anim = "idle";
+  player.y = GROUND_Y;
+  enemy.y = GROUND_Y;
 
+  player.facing = 1;
+  enemy.facing = -1;
+
+  player.attacking = false;
+  enemy.attacking = false;
+
+  player.special = false;
+  enemy.special = false;
+
+  player.hit = false;
+  enemy.hit = false;
+
+  player.frame = 0;
+  enemy.frame = 0;
+
+  player.anim = "idle";
   enemy.anim = "idle";
+
+  enemy.cooldown = 80;
+
+  keys.left = false;
+  keys.right = false;
 
   updateBars();
 
-  clearInterval(
-    timerInterval
-  );
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+
+  stopBgm();
 
   const roundSe = [
-
     seRound1,
     seRound2,
     seRound3
-
   ][stageIndex];
 
-  roundSe.currentTime = 0;
-
-  roundSe.play();
+  playSe(roundSe);
 
   showMessage(
-    `ROUND ${stageIndex+1}`,
+    `ROUND ${stageIndex + 1}`,
     1200
   );
 
-  setTimeout(()=>{
+  setTimeout(() => {
+    if (gameOver) return;
 
-    seFight.currentTime = 0;
-
-    seFight.play();
+    playSe(seFight);
 
     showMessage(
       "FIGHT!!",
-      1000
+      900
     );
+  }, 1300);
 
-  },1400);
-
-  setTimeout(()=>{
+  setTimeout(() => {
+    if (gameOver) return;
 
     battleActive = true;
-
     running = true;
 
-    bgm.currentTime = 0;
+    startBgm();
 
-    bgm.play();
+    timerInterval = setInterval(() => {
+      if (!battleActive || gameOver) return;
 
-    timerInterval =
-      setInterval(()=>{
+      timer--;
+      timerEl.textContent = timer;
 
-        if(
-          !battleActive ||
-          gameOver
-        ) return;
-
-        timer--;
-
-        timerEl.textContent =
-          timer;
-
-        if(timer <= 0){
-
-          finishGame(
-            false
-          );
-        }
-
-      },1000);
-
-  },2400);
+      if (timer <= 0) {
+        finishGame(false);
+      }
+    }, 1000);
+  }, 2300);
 }
 
 /* ---------- */
 /* MESSAGE */
 /* ---------- */
 
-function showMessage(
-  text,
-  duration
-){
+function showMessage(text, duration) {
+  messageToken++;
 
-  battleMessage.textContent =
-    text;
+  const currentToken = messageToken;
 
-  setTimeout(()=>{
+  battleMessage.textContent = text;
 
-    if(!gameOver){
-
-      battleMessage.textContent =
-        "";
+  setTimeout(() => {
+    if (
+      currentToken === messageToken &&
+      !gameOver
+    ) {
+      battleMessage.textContent = "";
     }
-
-  },duration);
-}
-
-/* ---------- */
-/* DRAW BG */
-/* ---------- */
-
-function drawBackground(){
-
-  if(
-    !stageImg.complete
-  ) return;
-
-  ctx.drawImage(
-
-    stageImg,
-
-    0,
-    0,
-
-    canvas.width,
-    canvas.height
-  );
+  }, duration);
 }
 
 /* ---------- */
 /* DRAW */
 /* ---------- */
 
-function drawCharacter(
-  character,
-  image,
-  flip=false
-){
+function drawBackground() {
+  if (!stageImg.complete) return;
 
-  if(
-    !image.complete
-  ) return;
+  ctx.drawImage(
+    stageImg,
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
+}
 
-  const frames =
-    animations[
-      character.anim
-    ];
+function drawCharacter(character, image, flip = false) {
+  if (!image.complete) return;
 
-  const frameIndex =
-    frames[
-      character.frame %
-      frames.length
-    ];
+  const frames = animations[character.anim];
+  const frameIndex = frames[character.frame % frames.length];
 
-  const frameW =
-    image.width / COLS;
+  const frameW = image.width / COLS;
+  const frameH = image.height / ROWS;
 
-  const frameH =
-    image.height / ROWS;
+  const sx = (frameIndex % COLS) * frameW;
+  const sy = Math.floor(frameIndex / COLS) * frameH;
 
-  const sx =
-    (frameIndex % COLS)
-    * frameW;
+  const drawW = frameW * SCALE;
+  const drawH = frameH * SCALE;
 
-  const sy =
-    Math.floor(
-      frameIndex / COLS
-    ) * frameH;
-
-  const drawW =
-    frameW * SCALE;
-
-  const drawH =
-    frameH * SCALE;
-
-  const drawX =
-    character.x;
-
-  const drawY =
-    character.y - drawH;
+  const drawX = character.x;
+  const drawY = character.y - drawH;
 
   ctx.save();
 
-  if(flip){
-
-    ctx.scale(-1,1);
+  if (flip) {
+    ctx.scale(-1, 1);
 
     ctx.drawImage(
-
       image,
-
       sx,
       sy,
-
       frameW,
       frameH,
-
       -drawX - drawW,
-
       drawY,
-
       drawW,
       drawH
     );
-
-  }else{
-
+  } else {
     ctx.drawImage(
-
       image,
-
       sx,
       sy,
-
       frameW,
       frameH,
-
       drawX,
-
       drawY,
-
       drawW,
       drawH
     );
@@ -782,59 +530,46 @@ function drawCharacter(
 /* PLAYER */
 /* ---------- */
 
-function updatePlayer(){
-
-  if(
+function updatePlayer() {
+  if (
     gameOver ||
     !battleActive
   ) return;
 
   let moving = false;
 
-  if(keys.left){
-
+  if (keys.left) {
     player.x -= 4;
-
     player.facing = -1;
-
     moving = true;
   }
 
-  if(keys.right){
-
+  if (keys.right) {
     player.x += 4;
-
     player.facing = 1;
-
     moving = true;
   }
 
-  player.x =
-    Math.max(
-      0,
-      Math.min(
-        canvas.width - 80,
-        player.x
-      )
-    );
+  player.x = Math.max(
+    0,
+    Math.min(
+      canvas.width - 80,
+      player.x
+    )
+  );
 
-  if(
+  if (
     moving &&
     !player.attacking &&
     !player.special &&
     !player.hit
-  ){
-
+  ) {
     player.anim = "walk";
-
-  }else if(
-
+  } else if (
     !player.attacking &&
     !player.special &&
     !player.hit
-
-  ){
-
+  ) {
     player.anim = "idle";
   }
 }
@@ -843,142 +578,112 @@ function updatePlayer(){
 /* ENEMY */
 /* ---------- */
 
-function updateEnemy(){
-
-  if(
+function updateEnemy() {
+  if (
     gameOver ||
     !battleActive
   ) return;
 
-  if(enemy.cooldown > 0){
-
+  if (enemy.cooldown > 0) {
     enemy.cooldown--;
   }
 
-  const dist =
-    player.x - enemy.x;
+  const dist = player.x - enemy.x;
+  const absDist = Math.abs(dist);
 
-  if(
-    Math.abs(dist) > 95
-  ){
+  if (absDist > 95) {
+    enemy.x += dist > 0 ? 1.6 : -1.6;
+    enemy.facing = dist > 0 ? 1 : -1;
 
-    enemy.x +=
-      dist > 0
-      ? 1.6
-      : -1.6;
-
-    enemy.facing =
-      dist > 0
-      ? 1
-      : -1;
-
-    if(
+    if (
       !enemy.attacking &&
       !enemy.hit
-    ){
-
+    ) {
       enemy.anim = "walk";
     }
+  } else {
+    enemy.facing = dist > 0 ? 1 : -1;
 
-  }else{
-
-    enemy.facing =
-      dist > 0
-      ? 1
-      : -1;
-
-    if(
-
+    if (
       !enemy.attacking &&
       !enemy.hit &&
       enemy.cooldown <= 0
-
-    ){
-
-      if(Math.random() < 0.04){
-
+    ) {
+      if (Math.random() < 0.04) {
         enemyAttack();
-
         enemy.cooldown = 70;
       }
     }
 
-    if(
+    if (
       !enemy.hit &&
       !enemy.attacking
-    ){
-
+    ) {
       enemy.anim = "idle";
     }
   }
+
+  enemy.x = Math.max(
+    0,
+    Math.min(
+      canvas.width - 80,
+      enemy.x
+    )
+  );
 }
 
 /* ---------- */
 /* HIT */
 /* ---------- */
 
-function attackHit(
-  attacker,
-  target,
-  damage,
-  knock
-){
+function attackHit(attacker, target, damage, knock) {
+  const dist = Math.abs(attacker.x - target.x);
 
-  const dist =
-    Math.abs(
-      attacker.x -
-      target.x
-    );
-
-  if(dist < 108){
-
-    seHit.currentTime = 0;
-
-    seHit.play();
+  if (dist < 108) {
+    playSe(seHit);
 
     hitStop();
 
     shake(
       attacker.special
-      ? 6
-      : 3
+        ? 6
+        : 3
     );
 
     target.hp -= damage;
 
-    target.hp =
-      Math.max(
-        0,
-        target.hp
-      );
+    target.hp = Math.max(
+      0,
+      target.hp
+    );
 
     target.hit = true;
-
     target.anim = "hit";
 
-    target.x +=
-      attacker.facing *
-      knock;
+    target.x += attacker.facing * knock;
+
+    target.x = Math.max(
+      0,
+      Math.min(
+        canvas.width - 80,
+        target.x
+      )
+    );
 
     updateBars();
 
-    setTimeout(()=>{
-
+    setTimeout(() => {
       target.hit = false;
 
-      if(
-        target.hp > 0
-      ){
-
+      if (
+        target.hp > 0 &&
+        !gameOver
+      ) {
         target.anim = "idle";
       }
+    }, 240);
 
-    },240);
-
-    if(
-      target.hp <= 0
-    ){
-
+    if (target.hp <= 0) {
       target.anim = "down";
 
       finishGame(
@@ -992,167 +697,138 @@ function attackHit(
 /* PUNCH */
 /* ---------- */
 
-function playerPunch(){
-
-  if(
-
+function playerPunch() {
+  if (
     player.attacking ||
     player.special ||
     gameOver ||
     !battleActive
-
   ) return;
 
-  sePunch.currentTime = 0;
-
-  sePunch.play();
+  playSe(sePunch);
 
   player.attacking = true;
-
   player.anim = "attack";
 
-  setTimeout(()=>{
-
+  setTimeout(() => {
     attackHit(
-
       player,
       enemy,
-
       6,
       15
-
     );
+  }, 110);
 
-  },110);
-
-  setTimeout(()=>{
-
+  setTimeout(() => {
     player.attacking = false;
 
-    if(!gameOver){
-
+    if (!gameOver) {
       player.anim = "idle";
     }
-
-  },420);
+  }, 420);
 }
 
 /* ---------- */
 /* DASH */
 /* ---------- */
 
-function playerDash(){
-
-  if(
-
+function playerDash() {
+  if (
     dashCooldown ||
     player.attacking ||
     player.special ||
     gameOver ||
     !battleActive
-
   ) return;
 
   dashCooldown = true;
 
   player.special = true;
-
   player.anim = "special";
 
-  const rush =
-    setInterval(()=>{
+  const rush = setInterval(() => {
+    player.x += player.facing * 12;
 
-      player.x +=
-        player.facing * 12;
+    player.x = Math.max(
+      0,
+      Math.min(
+        canvas.width - 80,
+        player.x
+      )
+    );
+  }, 16);
 
-    },16);
-
-  setTimeout(()=>{
-
+  setTimeout(() => {
     clearInterval(rush);
 
     attackHit(
-
       player,
       enemy,
-
       22,
       42
-
     );
+  }, 180);
 
-  },180);
-
-  setTimeout(()=>{
-
+  setTimeout(() => {
     player.special = false;
 
-    player.anim = "idle";
+    if (!gameOver) {
+      player.anim = "idle";
+    }
+  }, 520);
 
-  },520);
-
-  setTimeout(()=>{
-
+  setTimeout(() => {
     dashCooldown = false;
-
-  },3000);
+  }, 3000);
 }
 
 /* ---------- */
 /* ENEMY ATTACK */
 /* ---------- */
 
-function enemyAttack(){
+function enemyAttack() {
+  if (
+    enemy.attacking ||
+    enemy.hit ||
+    gameOver ||
+    !battleActive
+  ) return;
 
   enemy.attacking = true;
-
   enemy.anim = "attack";
 
-  setTimeout(()=>{
-
+  setTimeout(() => {
     attackHit(
-
       enemy,
       player,
-
       8,
       18
-
     );
+  }, 130);
 
-  },130);
-
-  setTimeout(()=>{
-
+  setTimeout(() => {
     enemy.attacking = false;
 
-    if(!gameOver){
-
+    if (!gameOver) {
       enemy.anim = "idle";
     }
-
-  },430);
+  }, 430);
 }
 
 /* ---------- */
 /* HP */
 /* ---------- */
 
-function updateBars(){
-
-  playerHpEl.style.width =
-    player.hp + "%";
-
-  enemyHpEl.style.width =
-    enemy.hp + "%";
+function updateBars() {
+  playerHpEl.style.width = player.hp + "%";
+  enemyHpEl.style.width = enemy.hp + "%";
 }
 
 /* ---------- */
 /* HIT STOP */
 /* ---------- */
 
-function hitStop(){
-
+function hitStop() {
   stopFrame = 4;
 }
 
@@ -1160,73 +836,56 @@ function hitStop(){
 /* SHAKE */
 /* ---------- */
 
-function shake(power){
-
+function shake(power) {
   canvas.style.transform =
-
     `translate(
-      ${Math.random()*power-power/2}px,
-      ${Math.random()*power-power/2}px
+      ${Math.random() * power - power / 2}px,
+      ${Math.random() * power - power / 2}px
     )`;
 
-  setTimeout(()=>{
-
-    canvas.style.transform =
-      "translate(0,0)";
-
-  },80);
+  setTimeout(() => {
+    canvas.style.transform = "translate(0,0)";
+  }, 80);
 }
 
 /* ---------- */
 /* FINISH */
 /* ---------- */
 
-function finishGame(win){
-
-  if(gameOver) return;
+function finishGame(win) {
+  if (gameOver) return;
 
   gameOver = true;
-
   running = false;
-
   battleActive = false;
 
-  clearInterval(
-    timerInterval
-  );
+  keys.left = false;
+  keys.right = false;
 
-  bgm.pause();
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
 
-  bgm.currentTime = 0;
+  stopBgm();
 
-  if(win){
-
+  if (win) {
     player.anim = "win";
-
     enemy.anim = "down";
 
-    seWin.currentTime = 0;
-
-    seWin.play();
+    playSe(seWin);
 
     showMessage(
-
-      stageIndex >= 2
-      ? "ALL CLEAR!!"
-      : "YOU WIN!!",
-
+      stageIndex >= stages.length - 1
+        ? "ALL CLEAR!!"
+        : "YOU WIN!!",
       1800
     );
 
-    setTimeout(()=>{
-
+    setTimeout(() => {
       stageIndex++;
 
-      if(
-        stageIndex >=
-        stages.length
-      ){
-
+      if (stageIndex >= stages.length) {
         resultTitle.textContent =
           "ALL CLEAR!!";
 
@@ -1234,28 +893,18 @@ function finishGame(win){
           "全3ステージクリア！";
 
         resultImage.src =
-          "assets/result_win.png";
+          RESULT_WIN_IMAGE;
 
-        showScreen(
-          resultScreen
-        );
-
-      }else{
-
+        showScreen(resultScreen);
+      } else {
         resetGame();
       }
-
-    },2200);
-
-  }else{
-
+    }, 2200);
+  } else {
     player.anim = "down";
-
     enemy.anim = "win";
 
-    seLose.currentTime = 0;
-
-    seLose.play();
+    playSe(seLose);
 
     showMessage(
       "YOU LOSE...",
@@ -1266,20 +915,14 @@ function finishGame(win){
       "YOU LOSE...";
 
     resultText.textContent =
-      `STAGE ${stageIndex+1}`;
+      `STAGE ${stageIndex + 1}`;
 
     resultImage.src =
-      stages[
-        stageIndex
-      ].result;
+      RESULT_LOSE_IMAGE;
 
-    setTimeout(()=>{
-
-      showScreen(
-        resultScreen
-      );
-
-    },2000);
+    setTimeout(() => {
+      showScreen(resultScreen);
+    }, 2000);
   }
 }
 
@@ -1287,43 +930,27 @@ function finishGame(win){
 /* LOOP */
 /* ---------- */
 
-function gameLoop(){
-
+function gameLoop() {
   ctx.clearRect(
-
     0,
     0,
-
     canvas.width,
     canvas.height
   );
 
-  if(
-
-    gameScreen.classList.contains(
-      "active"
-    )
-
-  ){
-
-    if(stopFrame > 0){
-
+  if (
+    gameScreen.classList.contains("active")
+  ) {
+    if (stopFrame > 0) {
       stopFrame--;
-
-    }else{
-
+    } else {
       updatePlayer();
-
       updateEnemy();
 
       animCounter++;
 
-      if(
-        animCounter % 18 === 0
-      ){
-
+      if (animCounter % 18 === 0) {
         player.frame++;
-
         enemy.frame++;
       }
     }
@@ -1331,178 +958,116 @@ function gameLoop(){
     drawBackground();
 
     drawCharacter(
-
       player,
       hippoSheet,
-
       player.facing === -1
     );
 
     drawCharacter(
-
       enemy,
       enemySheet,
-
       enemy.facing === -1
     );
   }
 
-  requestAnimationFrame(
-    gameLoop
-  );
+  requestAnimationFrame(gameLoop);
 }
 
 /* ---------- */
 /* HOLD BUTTON */
 /* ---------- */
 
-function bindHoldButton(
-  btn,
-  key
-){
-
+function bindHoldButton(btn, key) {
   btn.addEventListener(
-
     "touchstart",
-
-    e=>{
-
+    e => {
       e.preventDefault();
-
       keys[key] = true;
     },
-
-    { passive:false }
+    { passive: false }
   );
 
   btn.addEventListener(
-
     "touchend",
-
-    e=>{
-
+    e => {
       e.preventDefault();
-
       keys[key] = false;
     },
-
-    { passive:false }
+    { passive: false }
   );
 
   btn.addEventListener(
-
     "touchcancel",
-
-    e=>{
-
+    e => {
       e.preventDefault();
-
       keys[key] = false;
     },
-
-    { passive:false }
+    { passive: false }
   );
 
   btn.addEventListener(
-
     "mousedown",
-
-    ()=>{
-
+    () => {
       keys[key] = true;
     }
   );
 
   btn.addEventListener(
-
     "mouseup",
-
-    ()=>{
-
+    () => {
       keys[key] = false;
     }
   );
 
   btn.addEventListener(
-
     "mouseleave",
-
-    ()=>{
-
+    () => {
       keys[key] = false;
     }
   );
 }
 
-bindHoldButton(
-  leftBtn,
-  "left"
-);
-
-bindHoldButton(
-  rightBtn,
-  "right"
-);
+bindHoldButton(leftBtn, "left");
+bindHoldButton(rightBtn, "right");
 
 /* ---------- */
 /* ACTION */
 /* ---------- */
 
-punchBtn.addEventListener(
-  "click",
-  playerPunch
-);
-
-dashBtn.addEventListener(
-  "click",
-  playerDash
-);
+punchBtn.addEventListener("click", playerPunch);
+dashBtn.addEventListener("click", playerDash);
 
 /* ---------- */
 /* TITLE */
 /* ---------- */
 
-startBtn.addEventListener(
-  "click",
-  startGame
-);
+startBtn.addEventListener("click", startGame);
 
 document
-  .getElementById(
-    "titleLogo"
-  )
-  .addEventListener(
-    "click",
-    startGame
-  );
+  .getElementById("titleLogo")
+  .addEventListener("click", startGame);
 
 /* ---------- */
-/* RESULT */
+/* RESULT BUTTON */
 /* ---------- */
 
 retryBtn.addEventListener(
-
   "click",
-
-  ()=>{
-
-    seSelect.currentTime = 0;
-
-    seSelect.play();
+  () => {
+    playSe(seSelect);
 
     stageIndex = 0;
 
-    showScreen(
-      titleScreen
-    );
+    stopBgm();
+
+    showScreen(titleScreen);
   }
 );
 
 homeBtn.addEventListener(
-
   "click",
-
-  ()=>{
+  () => {
+    playSe(seSelect);
 
     location.href =
       "https://afoolhippo.github.io/home/?skipTitle=1";
@@ -1510,22 +1075,25 @@ homeBtn.addEventListener(
 );
 
 backBtn.addEventListener(
-
   "click",
-
-  ()=>{
+  () => {
+    playSe(seSelect);
 
     gameOver = true;
-
     running = false;
-
     battleActive = false;
 
-    bgm.pause();
+    keys.left = false;
+    keys.right = false;
 
-    showScreen(
-      titleScreen
-    );
+    if (timerInterval) {
+      clearInterval(timerInterval);
+      timerInterval = null;
+    }
+
+    stopBgm();
+
+    showScreen(titleScreen);
   }
 );
 
@@ -1534,36 +1102,30 @@ backBtn.addEventListener(
 /* ---------- */
 
 shareBtn.addEventListener(
-
   "click",
-
-  ()=>{
+  () => {
+    playSe(seSelect);
 
     let text = "";
 
-    if(stageIndex >= 3){
-
+    if (stageIndex >= stages.length) {
       text =
 `カバ、全員ぶっとばした！🦛🥊🍆🍅🦷
 ALL CLEAR!!
 無料ブラウザゲーム「カバファイト」
 https://afoolhippo.github.io/game14/
 #カバファイト #カバゲーセン`;
-
-    }else{
-
+    } else {
       text =
 `カバ、やられた…🦛🥊
-到達ステージ：${stageIndex+1}
+到達ステージ：${stageIndex + 1}
 無料ブラウザゲーム「カバファイト」
 https://afoolhippo.github.io/game14/
 #カバファイト #カバゲーセン`;
     }
 
     window.open(
-
       `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`,
-
       "_blank"
     );
   }
@@ -1573,46 +1135,32 @@ https://afoolhippo.github.io/game14/
 /* INIT */
 /* ---------- */
 
-showScreen(
-  titleScreen
-);
+showScreen(titleScreen);
+titleScreen.classList.remove("active");
 
-titleScreen.classList.remove(
-  "active"
-);
-
-preloadAssets().then(()=>{
-
-  if(loadingScreen){
-
-    loadingScreen.style.display =
-      "none";
-  }
-
-  showScreen(
-    titleScreen
+preloadAssets().then(() => {
+  updateLoadingProgress(
+    preloadList.length,
+    preloadList.length
   );
 
+  setTimeout(() => {
+    if (loadingScreen) {
+      loadingScreen.style.display = "none";
+    }
+
+    showScreen(titleScreen);
+  }, 250);
 });
 
-setTimeout(()=>{
-
-  if(
-
+setTimeout(() => {
+  if (
     loadingScreen &&
-    loadingScreen.style.display !==
-    "none"
-
-  ){
-
-    loadingScreen.style.display =
-      "none";
-
-    showScreen(
-      titleScreen
-    );
+    loadingScreen.style.display !== "none"
+  ) {
+    loadingScreen.style.display = "none";
+    showScreen(titleScreen);
   }
-
-},2500);
+}, 3500);
 
 gameLoop();
