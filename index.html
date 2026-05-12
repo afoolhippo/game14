@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+
 <meta charset="UTF-8" />
 
 <meta
@@ -27,21 +28,40 @@
 />
 
 <link rel="stylesheet" href="style.css" />
+
 </head>
 
 <body>
 
+<!-- LOADING -->
+
 <div id="loadingScreen">
+
   <div class="loadingBox">
-    <p>LOADING...</p>
+
+    <p class="loadingText">
+      NOW LOADING
+      <span class="dots"></span>
+    </p>
+
+    <div class="loadingBar">
+
+      <div class="loadingFill"></div>
+
+    </div>
+
   </div>
+
 </div>
 
 <div id="app">
 
   <!-- TITLE -->
 
-  <section id="titleScreen" class="screen">
+  <section
+    id="titleScreen"
+    class="screen"
+  >
 
     <div class="menuBox">
 
@@ -69,13 +89,18 @@
 
   <!-- GAME -->
 
-  <section id="gameScreen" class="screen">
+  <section
+    id="gameScreen"
+    class="screen"
+  >
 
     <canvas
       id="gameCanvas"
       width="360"
       height="640"
     ></canvas>
+
+    <!-- HUD -->
 
     <div id="battleHud">
 
@@ -164,7 +189,10 @@
 
   <!-- RESULT -->
 
-  <section id="resultScreen" class="screen">
+  <section
+    id="resultScreen"
+    class="screen"
+  >
 
     <div class="menuBox">
 
