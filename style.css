@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, user-scalable=no"
+  />
+
+  <title>カバファイト</title>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+<div id="app">
+
+  <!-- タイトル -->
+
+  <section id="titleScreen" class="screen active">
+
+    <div class="menuBox">
+
+      <img
+        src="assets/title.png"
+        id="titleLogo"
+        alt="カバファイト"
+      />
+
+      <p class="ruleText">
+        カバを操作して<br>
+        ナス・トマト・歯をぶっとばせ！
+      </p>
+
+      <button id="startBtn" class="menuBtn">
+        タップしてスタート
+      </button>
+
+    </div>
+
+  </section>
+
+  <!-- ゲーム -->
+
+  <section id="gameScreen" class="screen">
+
+    <canvas
+      id="gameCanvas"
+      width="360"
+      height="640"
+    ></canvas>
+
+    <!-- HUD -->
+
+    <div id="battleHud">
+
+      <div class="nameRow">
+
+        <div class="fighterName">
+          KABA
+        </div>
+
+        <div id="timer">
+          30
+        </div>
+
+        <div
+          class="fighterName enemy"
+          id="enemyName"
+        >
+          NASU
+        </div>
+
+      </div>
+
+      <div class="hpRow">
+
+        <div class="hpBox">
+          <div id="playerHp" class="hpFill"></div>
+        </div>
+
+        <div class="hpBox">
+          <div id="enemyHp" class="hpFill enemyHp"></div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <button id="backBtn">
+      タイトルへ
+    </button>
+
+    <div id="battleMessage"></div>
+
+    <!-- ボタン -->
+
+    <div id="controls">
+
+      <div class="moveButtons">
+
+        <button
+          id="leftBtn"
+          class="controlBtn dirBtn"
+        >
+          ◀
+        </button>
+
+        <button
+          id="rightBtn"
+          class="controlBtn dirBtn"
+        >
+          ▶
+        </button>
+
+      </div>
+
+      <div class="actionButtons">
+
+        <button
+          id="punchBtn"
+          class="controlBtn"
+        >
+          PUNCH
+        </button>
+
+        <button
+          id="dashBtn"
+          class="controlBtn dashBtn"
+        >
+          DASH
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- 結果 -->
+
+  <section id="resultScreen" class="screen">
+
+    <div class="menuBox">
+
+      <h2 id="resultTitle">
+        YOU WIN!!
+      </h2>
+
+      <img
+        id="resultImage"
+        src="assets/result_win.png"
+        alt=""
+      />
+
+      <p id="resultText">
+        全3ステージクリア！
+      </p>
+
+      <div class="resultButtons">
+
+        <button id="shareBtn" class="menuBtn">
+          Xでシェア
+        </button>
+
+        <button id="retryBtn" class="menuBtn">
+          もう1回遊ぶ
+        </button>
+
+        <button id="homeBtn" class="menuBtn sub">
+          カバゲーセンへ
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</div>
+
+<script src="game.js"></script>
+
+</body>
+</html>
