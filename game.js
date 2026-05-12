@@ -1205,4 +1205,20 @@ preloadAssets().then(() => {
   setTimeout(() => {
     if (loadingScreen) {
       loadingScreen.style.display = "none";
-  
+    }
+
+    showScreen(titleScreen);
+  }, 250);
+});
+
+setTimeout(() => {
+  if (
+    loadingScreen &&
+    loadingScreen.style.display !== "none"
+  ) {
+    loadingScreen.style.display = "none";
+    showScreen(titleScreen);
+  }
+}, 3500);
+
+gameLoop();
