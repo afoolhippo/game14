@@ -50,10 +50,10 @@ const enemyName = document.getElementById("enemyName");
 
 const resultTitle = document.getElementById("resultTitle");
 const resultText = document.getElementById("resultText");
-const resultImage = document.getElementById("resultImage");
+const resultCanvas = document.getElementById("resultCanvas");
+const resultCtx = resultCanvas.getContext("2d");
 
-const RESULT_WIN_IMAGE = "assets/result_win.png";
-const RESULT_LOSE_IMAGE = "assets/result_lose.png";
+resultCtx.imageSmoothingEnabled = false;
 
 /* ---------- */
 /* AUDIO */
@@ -119,6 +119,13 @@ const ROWS = 3;
 const SCALE = 0.38;
 const GROUND_Y = 500;
 
+/*
+  4列×3行のスプライトシート。
+  勝利画像は「右下」のコマを使う。
+*/
+const FRAME_DOWN = 8;
+const FRAME_WIN = 11;
+
 /* ---------- */
 /* GAME */
 /* ---------- */
@@ -176,8 +183,8 @@ const animations = {
   attack: [5],
   special: [6],
   hit: [7],
-  down: [8],
-  win: [9]
+  down: [FRAME_DOWN],
+  win: [FRAME_WIN]
 };
 
 const keys = {
@@ -232,9 +239,6 @@ const preloadList = [
   "assets/stage_tomato.png",
   "assets/stage_tooth.png",
 
-  RESULT_WIN_IMAGE,
-  RESULT_LOSE_IMAGE,
-
   "assets/bgm_nasu.mp3",
   "assets/bgm_tomato.mp3",
   "assets/bgm_tooth.mp3",
@@ -258,7 +262,7 @@ function updateLoadingProgress(done, total) {
   }
 
   if (loadingCount) {
-    loadingCount.textContent = `HP ${percent}%`;
+    loadingCount.textContent = `${percent}%`;
   }
 }
 
@@ -524,6 +528,45 @@ function drawCharacter(character, image, flip = false) {
   }
 
   ctx.restore();
+}
+
+/* ---------- */
+/* RESULT DRAW */
+/* ---------- */
+
+function drawResultHippo(frameIndex) {
+  if (!hippoSheet.complete) {
+    hippoSheet.onload = () => {
+      drawResultHippo(frameIndex);
+    };
+
+    return;
+  }
+
+  const frameW = hippoSheet.width / COLS;
+  const frameH = hippoSheet.height / ROWS;
+
+  const sx = (frameIndex % COLS) * frameW;
+  const sy = Math.floor(frameIndex / COLS) * frameH;
+
+  resultCtx.clearRect(
+    0,
+    0,
+    resultCanvas.width,
+    resultCanvas.height
+  );
+
+  resultCtx.drawImage(
+    hippoSheet,
+    sx,
+    sy,
+    frameW,
+    frameH,
+    0,
+    0,
+    resultCanvas.width,
+    resultCanvas.height
+  );
 }
 
 /* ---------- */
@@ -869,6 +912,18 @@ function finishGame(win) {
 
   stopBgm();
 
+  player.hit = false;
+  enemy.hit = false;
+
+  player.attacking = false;
+  enemy.attacking = false;
+
+  player.special = false;
+  enemy.special = false;
+
+  player.frame = 0;
+  enemy.frame = 0;
+
   if (win) {
     player.anim = "win";
     enemy.anim = "down";
@@ -892,8 +947,7 @@ function finishGame(win) {
         resultText.textContent =
           "全3ステージクリア！";
 
-        resultImage.src =
-          RESULT_WIN_IMAGE;
+        drawResultHippo(FRAME_WIN);
 
         showScreen(resultScreen);
       } else {
@@ -917,8 +971,7 @@ function finishGame(win) {
     resultText.textContent =
       `STAGE ${stageIndex + 1}`;
 
-    resultImage.src =
-      RESULT_LOSE_IMAGE;
+    drawResultHippo(FRAME_DOWN);
 
     setTimeout(() => {
       showScreen(resultScreen);

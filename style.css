@@ -99,7 +99,7 @@ button {
 
   border: 5px solid #fff;
 
-  background: #220000;
+  background: #111;
 
   padding: 4px;
 
@@ -113,13 +113,7 @@ button {
 
   height: 100%;
 
-  background: linear-gradient(
-    to right,
-    #fff36a,
-    #ffe600,
-    #ff8a00,
-    #ff2d2d
-  );
+  background: #fff;
 
   transition: width 0.15s linear;
 }
@@ -523,13 +517,15 @@ button:active {
     6px 6px 0 #000;
 }
 
-#resultImage {
+#resultCanvas {
 
   width: 180px;
+  height: 180px;
 
   margin-bottom: 14px;
 
   image-rendering: pixelated;
+  image-rendering: crisp-edges;
 }
 
 #resultText {
