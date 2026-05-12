@@ -1,187 +1,508 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8" />
+@import url("https://fonts.googleapis.com/css2?family=DotGothic16&display=swap");
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, user-scalable=no"
-  />
+:root {
 
-  <title>カバファイト</title>
+  --sky: #4cc7ff;
+  --sky2: #dff9ff;
 
-  <link rel="stylesheet" href="style.css" />
-</head>
+  --yellow: #ffe600;
 
-<body>
+  --dark: #07131c;
 
-<div id="app">
+  --pink: #ff52c8;
+}
 
-  <!-- タイトル -->
+* {
 
-  <section id="titleScreen" class="screen active">
+  margin: 0;
+  padding: 0;
 
-    <div class="menuBox">
+  box-sizing: border-box;
 
-      <img
-        src="assets/title.png"
-        id="titleLogo"
-        alt="カバファイト"
-      />
+  touch-action: manipulation;
 
-      <p class="ruleText">
-        カバを操作して<br>
-        ナス・トマト・歯をぶっとばせ！
-      </p>
+  user-select: none;
+  -webkit-user-select: none;
+}
 
-      <button id="startBtn" class="menuBtn">
-        タップしてスタート
-      </button>
+html,
+body {
 
-    </div>
+  width: 100%;
+  height: 100%;
 
-  </section>
+  overflow: hidden;
 
-  <!-- ゲーム -->
+  background: var(--dark);
 
-  <section id="gameScreen" class="screen">
+  font-family: "DotGothic16", monospace;
+}
 
-    <canvas
-      id="gameCanvas"
-      width="360"
-      height="640"
-    ></canvas>
+button {
 
-    <!-- HUD -->
+  font-family: "DotGothic16", monospace;
+}
 
-    <div id="battleHud">
+#app {
 
-      <div class="nameRow">
+  width: 100vw;
+  height: 100vh;
 
-        <div class="fighterName">
-          KABA
-        </div>
+  position: relative;
 
-        <div id="timer">
-          30
-        </div>
+  overflow: hidden;
+}
 
-        <div
-          class="fighterName enemy"
-          id="enemyName"
-        >
-          NASU
-        </div>
+/* ---------- */
+/* SCREEN */
+/* ---------- */
 
-      </div>
+.screen {
 
-      <div class="hpRow">
+  position: absolute;
 
-        <div class="hpBox">
-          <div id="playerHp" class="hpFill"></div>
-        </div>
+  inset: 0;
 
-        <div class="hpBox">
-          <div id="enemyHp" class="hpFill enemyHp"></div>
-        </div>
+  width: 100%;
+  height: 100%;
 
-      </div>
+  display: none;
 
-    </div>
+  overflow: hidden;
+}
 
-    <button id="backBtn">
-      タイトルへ
-    </button>
+.screen.active {
 
-    <div id="battleMessage"></div>
+  display: block;
+}
 
-    <!-- ボタン -->
+/* ---------- */
+/* TITLE */
+/* ---------- */
 
-    <div id="controls">
+#titleScreen,
+#resultScreen {
 
-      <div class="moveButtons">
+  background:
+    linear-gradient(
+      rgba(76,199,255,0.2),
+      rgba(0,0,0,0.65)
+    ),
+    url("assets/stage_nasu.png")
+    center / cover
+    no-repeat;
+}
 
-        <button
-          id="leftBtn"
-          class="controlBtn dirBtn"
-        >
-          ◀
-        </button>
+.menuBox {
 
-        <button
-          id="rightBtn"
-          class="controlBtn dirBtn"
-        >
-          ▶
-        </button>
+  position: absolute;
 
-      </div>
+  left: 50%;
+  top: 50%;
 
-      <div class="actionButtons">
+  transform:
+    translate(-50%, -50%);
 
-        <button
-          id="punchBtn"
-          class="controlBtn"
-        >
-          PUNCH
-        </button>
+  width:
+    min(92vw, 430px);
 
-        <button
-          id="dashBtn"
-          class="controlBtn dashBtn"
-        >
-          DASH
-        </button>
+  padding:
+    24px 18px;
 
-      </div>
+  text-align: center;
 
-    </div>
+  border:
+    6px solid #000;
 
-  </section>
+  border-radius: 24px;
 
-  <!-- 結果 -->
+  background:
+    rgba(223,249,255,0.95);
 
-  <section id="resultScreen" class="screen">
+  box-shadow:
+    8px 8px 0 #000;
+}
 
-    <div class="menuBox">
+#titleLogo {
 
-      <h2 id="resultTitle">
-        YOU WIN!!
-      </h2>
+  width: 100%;
 
-      <img
-        id="resultImage"
-        src="assets/result_win.png"
-        alt=""
-      />
+  margin-bottom: 16px;
 
-      <p id="resultText">
-        全3ステージクリア！
-      </p>
+  image-rendering: pixelated;
+}
 
-      <div class="resultButtons">
+.ruleText {
 
-        <button id="shareBtn" class="menuBtn">
-          Xでシェア
-        </button>
+  color: #111;
 
-        <button id="retryBtn" class="menuBtn">
-          もう1回遊ぶ
-        </button>
+  font-size: 20px;
 
-        <button id="homeBtn" class="menuBtn sub">
-          カバゲーセンへ
-        </button>
+  line-height: 1.6;
 
-      </div>
+  margin-bottom: 18px;
+}
 
-    </div>
+.menuBtn {
 
-  </section>
+  width: 100%;
 
-</div>
+  min-height: 84px;
 
-<script src="game.js"></script>
+  margin-top: 14px;
 
-</body>
-</html>
+  border:
+    6px solid #000;
+
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      #ffffff,
+      var(--sky)
+    );
+
+  color: #07131c;
+
+  font-size: 24px;
+
+  box-shadow:
+    6px 7px 0 #000;
+}
+
+.menuBtn.sub {
+
+  background:
+    linear-gradient(
+      #ffffff,
+      #d8d8d8
+    );
+}
+
+/* ---------- */
+/* GAME */
+/* ---------- */
+
+#gameCanvas {
+
+  width: 100vw;
+  height: 100vh;
+
+  display: block;
+
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+/* ---------- */
+/* HUD */
+/* ---------- */
+
+#battleHud {
+
+  position: absolute;
+
+  top: 8px;
+  left: 0;
+
+  width: 100%;
+
+  padding: 0 10px;
+
+  z-index: 10;
+
+  pointer-events: none;
+}
+
+.nameRow {
+
+  display: grid;
+
+  grid-template-columns:
+    1fr 74px 1fr;
+
+  gap: 8px;
+
+  align-items: center;
+}
+
+.fighterName {
+
+  color: var(--yellow);
+
+  font-size: 23px;
+
+  text-shadow:
+    3px 3px 0 #000,
+    -2px -2px 0 #000,
+    2px -2px 0 #000,
+    -2px 2px 0 #000;
+}
+
+.enemy {
+
+  text-align: right;
+
+  color: #ff79dc;
+}
+
+#timer {
+
+  height: 46px;
+
+  line-height: 36px;
+
+  text-align: center;
+
+  color: white;
+
+  background: #111;
+
+  border:
+    5px solid var(--yellow);
+
+  font-size: 30px;
+
+  box-shadow:
+    0 0 0 3px #000;
+}
+
+.hpRow {
+
+  margin-top: 5px;
+
+  display: flex;
+
+  justify-content: space-between;
+}
+
+.hpBox {
+
+  width: 43%;
+
+  height: 26px;
+
+  background: #320000;
+
+  border:
+    5px solid #000;
+
+  box-shadow:
+    0 0 0 2px var(--yellow),
+    4px 4px 0 #000;
+}
+
+.hpFill {
+
+  width: 100%;
+  height: 100%;
+
+  background:
+    linear-gradient(
+      to right,
+      #fff36a,
+      #ffe600,
+      #ff8a00,
+      #ff2d2d
+    );
+}
+
+.enemyHp {
+
+  margin-left: auto;
+
+  background:
+    linear-gradient(
+      to left,
+      #fff36a,
+      #ffe600,
+      #ff8a00,
+      #ff2d2d
+    );
+}
+
+/* ---------- */
+/* BACK */
+/* ---------- */
+
+#backBtn {
+
+  position: absolute;
+
+  top: 92px;
+  right: 10px;
+
+  z-index: 20;
+
+  padding:
+    10px 14px;
+
+  border:
+    4px solid #000;
+
+  border-radius: 14px;
+
+  background:
+    rgba(255,255,255,0.9);
+
+  font-size: 15px;
+
+  box-shadow:
+    4px 4px 0 #000;
+}
+
+/* ---------- */
+/* MESSAGE */
+/* ---------- */
+
+#battleMessage {
+
+  position: absolute;
+
+  top: 34%;
+
+  width: 100%;
+
+  text-align: center;
+
+  color: var(--yellow);
+
+  font-size: 58px;
+
+  z-index: 30;
+
+  pointer-events: none;
+
+  text-shadow:
+    5px 5px 0 #000,
+    -3px -3px 0 #000,
+    3px -3px 0 #000,
+    -3px 3px 0 #000;
+}
+
+/* ---------- */
+/* BUTTONS */
+/* ---------- */
+
+#controls {
+
+  position: absolute;
+
+  bottom: 18px;
+  left: 0;
+
+  width: 100%;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: flex-end;
+
+  padding: 0 10px;
+
+  z-index: 25;
+}
+
+.moveButtons,
+.actionButtons {
+
+  display: flex;
+
+  gap: 12px;
+}
+
+.controlBtn {
+
+  min-width: 100px;
+  min-height: 92px;
+
+  padding: 12px;
+
+  border:
+    6px solid #000;
+
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      #ffffff,
+      var(--sky)
+    );
+
+  color: #07131c;
+
+  font-size: 24px;
+
+  box-shadow:
+    6px 7px 0 #000;
+}
+
+.dirBtn {
+
+  min-width: 88px;
+
+  font-size: 40px;
+}
+
+#punchBtn {
+
+  background:
+    linear-gradient(
+      #fff7b8,
+      #ffad26
+    );
+}
+
+.dashBtn {
+
+  background:
+    linear-gradient(
+      #ffd6f4,
+      var(--pink)
+    );
+}
+
+button:active {
+
+  transform:
+    translate(4px,5px);
+
+  box-shadow:
+    2px 2px 0 #000;
+}
+
+/* ---------- */
+/* RESULT */
+/* ---------- */
+
+#resultTitle {
+
+  color: #ff2f2f;
+
+  font-size: 52px;
+
+  margin-bottom: 16px;
+
+  text-shadow:
+    3px 3px 0 var(--yellow),
+    6px 6px 0 #000;
+}
+
+#resultImage {
+
+  width: 180px;
+
+  margin-bottom: 16px;
+
+  image-rendering: pixelated;
+}
+
+#resultText {
+
+  color: #111;
+
+  font-size: 22px;
+
+  margin-bottom: 16px;
+}
