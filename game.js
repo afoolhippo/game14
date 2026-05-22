@@ -885,10 +885,13 @@ function gameLoop() {
 }
 
 function bindHoldButton(btn, key) {
+
   btn.addEventListener(
     "touchstart",
     e => {
       e.preventDefault();
+      e.stopPropagation();
+
       keys[key] = true;
     },
     { passive: false }
@@ -898,6 +901,8 @@ function bindHoldButton(btn, key) {
     "touchend",
     e => {
       e.preventDefault();
+      e.stopPropagation();
+
       keys[key] = false;
     },
     { passive: false }
@@ -907,9 +912,47 @@ function bindHoldButton(btn, key) {
     "touchcancel",
     e => {
       e.preventDefault();
+      e.stopPropagation();
+
       keys[key] = false;
     },
     { passive: false }
+  );
+
+  btn.addEventListener(
+    "click",
+    e => {
+      e.preventDefault();
+      e.stopPropagation();
+    },
+    { passive: false }
+  );
+
+  btn.addEventListener(
+    "mousedown",
+    e => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      keys[key] = true;
+    }
+  );
+
+  btn.addEventListener(
+    "mouseup",
+    e => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      keys[key] = false;
+    }
+  );
+
+  btn.addEventListener(
+    "mouseleave",
+    () => {
+      keys[key] = false;
+    }
   );
 }
 

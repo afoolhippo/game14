@@ -431,7 +431,7 @@ button {
   bottom:
     calc(
       env(safe-area-inset-bottom)
-      + 48px
+      + 18px
     );
 
   width: 100%;
@@ -459,10 +459,10 @@ button {
 .controlBtn {
 
   min-width:
-    clamp(74px, 25vw, 100px);
+    clamp(68px, 22vw, 92px);
 
   min-height:
-    clamp(64px, 12vh, 86px);
+    clamp(56px, 10vh, 74px);
 
   padding: 8px;
 
@@ -635,7 +635,7 @@ button:active {
 
   .controlBtn {
 
-    min-height: 62px;
+    min-height: 54px;
   }
 
   #battleMessage {
