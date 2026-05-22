@@ -50,10 +50,10 @@ const enemyName = document.getElementById("enemyName");
 
 const resultTitle = document.getElementById("resultTitle");
 const resultText = document.getElementById("resultText");
-const resultImage = document.getElementById("resultImage");
+const resultCanvas = document.getElementById("resultCanvas");
+const resultCtx = resultCanvas.getContext("2d");
 
-const RESULT_WIN_IMAGE = "assets/result_win.png";
-const RESULT_LOSE_IMAGE = "assets/result_lose.png";
+resultCtx.imageSmoothingEnabled = false;
 
 /* ---------- */
 /* AUDIO */
@@ -71,16 +71,22 @@ const seLose = new Audio("assets/se_lose.mp3");
 
 const bgm = new Audio();
 bgm.loop = true;
-
 seSelect.volume = 0.45;
+
 sePunch.volume = 0.28;
+
 seHit.volume = 0.42;
+
 seFight.volume = 0.55;
+
 seRound1.volume = 0.55;
 seRound2.volume = 0.55;
 seRound3.volume = 0.55;
+
 seWin.volume = 0.6;
+
 seLose.volume = 0.6;
+
 bgm.volume = 0.32;
 
 /* ---------- */
@@ -102,34 +108,19 @@ const stages = [
     name: "NASU",
     sprite: "assets/nasu_sheet.png",
     bg: "assets/stage_nasu.png",
-    bgm: "assets/bgm_nasu.mp3",
-    speed: 1.4,
-    attackDamage: 7,
-    attackRate: 0.035,
-    cooldown: 80,
-    evadeRate: 0
+    bgm: "assets/bgm_nasu.mp3"
   },
   {
     name: "TOMATO",
     sprite: "assets/tomato_sheet.png",
     bg: "assets/stage_tomato.png",
-    bgm: "assets/bgm_tomato.mp3",
-    speed: 1.75,
-    attackDamage: 9,
-    attackRate: 0.045,
-    cooldown: 65,
-    evadeRate: 0.01
+    bgm: "assets/bgm_tomato.mp3"
   },
   {
     name: "TOOTH",
     sprite: "assets/tooth_sheet.png",
     bg: "assets/stage_tooth.png",
-    bgm: "assets/bgm_tooth.mp3",
-    speed: 2.8,
-    attackDamage: 15,
-    attackRate: 0.075,
-    cooldown: 42,
-    evadeRate: 0.035
+    bgm: "assets/bgm_tooth.mp3"
   }
 ];
 
@@ -144,6 +135,10 @@ const ROWS = 3;
 const SCALE = 0.38;
 const GROUND_Y = 470;
 
+/*
+  4列×3行のスプライトシート。
+  勝利画像は「右下」のコマを使う。
+*/
 const FRAME_DOWN = 8;
 const FRAME_WIN = 11;
 
@@ -225,6 +220,26 @@ function showScreen(screen) {
   screen.classList.add("active");
 }
 
+function showScreen(screen) {
+  titleScreen.classList.remove("active");
+  gameScreen.classList.remove("active");
+  resultScreen.classList.remove("active");
+
+  const resultButtons = document.querySelector(".resultButtons");
+
+  if (resultButtons) {
+    resultButtons.classList.remove("show");
+  }
+
+  screen.classList.add("active");
+
+  if (screen === resultScreen && resultButtons) {
+    setTimeout(() => {
+      resultButtons.classList.add("show");
+    }, 1500);
+  }
+}
+
 /* ---------- */
 /* AUDIO HELPERS */
 /* ---------- */
@@ -259,9 +274,6 @@ const preloadList = [
   "assets/stage_nasu.png",
   "assets/stage_tomato.png",
   "assets/stage_tooth.png",
-
-  RESULT_WIN_IMAGE,
-  RESULT_LOSE_IMAGE,
 
   "assets/bgm_nasu.mp3",
   "assets/bgm_tomato.mp3",
@@ -341,12 +353,8 @@ function preloadAssets() {
 /* STAGE */
 /* ---------- */
 
-function getCurrentStage() {
-  return stages[stageIndex];
-}
-
 function loadStage() {
-  const s = getCurrentStage();
+  const s = stages[stageIndex];
 
   enemyName.textContent = s.name;
 
@@ -411,7 +419,7 @@ function resetGame() {
   player.anim = "idle";
   enemy.anim = "idle";
 
-  enemy.cooldown = getCurrentStage().cooldown;
+  enemy.cooldown = 80;
 
   keys.left = false;
   keys.right = false;
@@ -559,6 +567,45 @@ function drawCharacter(character, image, flip = false) {
 }
 
 /* ---------- */
+/* RESULT DRAW */
+/* ---------- */
+
+function drawResultHippo(frameIndex) {
+  if (!hippoSheet.complete) {
+    hippoSheet.onload = () => {
+      drawResultHippo(frameIndex);
+    };
+
+    return;
+  }
+
+  const frameW = hippoSheet.width / COLS;
+  const frameH = hippoSheet.height / ROWS;
+
+  const sx = (frameIndex % COLS) * frameW;
+  const sy = Math.floor(frameIndex / COLS) * frameH;
+
+  resultCtx.clearRect(
+    0,
+    0,
+    resultCanvas.width,
+    resultCanvas.height
+  );
+
+  resultCtx.drawImage(
+    hippoSheet,
+    sx,
+    sy,
+    frameW,
+    frameH,
+    0,
+    0,
+    resultCanvas.width,
+    resultCanvas.height
+  );
+}
+
+/* ---------- */
 /* PLAYER */
 /* ---------- */
 
@@ -616,8 +663,6 @@ function updateEnemy() {
     !battleActive
   ) return;
 
-  const s = getCurrentStage();
-
   if (enemy.cooldown > 0) {
     enemy.cooldown--;
   }
@@ -625,21 +670,9 @@ function updateEnemy() {
   const dist = player.x - enemy.x;
   const absDist = Math.abs(dist);
 
-  enemy.facing = dist > 0 ? 1 : -1;
-
-  if (
-    s.evadeRate > 0 &&
-    Math.random() < s.evadeRate &&
-    absDist < 120 &&
-    !enemy.attacking &&
-    !enemy.hit
-  ) {
-    enemy.x -= enemy.facing * 34;
-    enemy.anim = "walk";
-  }
-
   if (absDist > 95) {
-    enemy.x += dist > 0 ? s.speed : -s.speed;
+    enemy.x += dist > 0 ? 1.6 : -1.6;
+    enemy.facing = dist > 0 ? 1 : -1;
 
     if (
       !enemy.attacking &&
@@ -648,14 +681,16 @@ function updateEnemy() {
       enemy.anim = "walk";
     }
   } else {
+    enemy.facing = dist > 0 ? 1 : -1;
+
     if (
       !enemy.attacking &&
       !enemy.hit &&
       enemy.cooldown <= 0
     ) {
-      if (Math.random() < s.attackRate) {
+      if (Math.random() < 0.04) {
         enemyAttack();
-        enemy.cooldown = s.cooldown;
+        enemy.cooldown = 70;
       }
     }
 
@@ -838,8 +873,6 @@ function enemyAttack() {
     !battleActive
   ) return;
 
-  const s = getCurrentStage();
-
   enemy.attacking = true;
   enemy.anim = "attack";
 
@@ -847,8 +880,8 @@ function enemyAttack() {
     attackHit(
       enemy,
       player,
-      s.attackDamage,
-      stageIndex === 2 ? 30 : 18
+      8,
+      18
     );
   }, 130);
 
@@ -950,8 +983,7 @@ function finishGame(win) {
         resultText.textContent =
           "全3ステージクリア！";
 
-        resultImage.src =
-          RESULT_WIN_IMAGE;
+        drawResultHippo(FRAME_WIN);
 
         showScreen(resultScreen);
       } else {
@@ -975,8 +1007,7 @@ function finishGame(win) {
     resultText.textContent =
       `STAGE ${stageIndex + 1}`;
 
-    resultImage.src =
-      RESULT_LOSE_IMAGE;
+    drawResultHippo(FRAME_DOWN);
 
     setTimeout(() => {
       showScreen(resultScreen);

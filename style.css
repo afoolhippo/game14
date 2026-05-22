@@ -210,19 +210,26 @@ button {
 
   border: 6px solid #000;
 
-  background: #ffffff;
+  background: linear-gradient(
+    #ffffff,
+    var(--sky)
+  );
 
   color: #111;
 
   font-size:
     clamp(18px, 4vw, 24px);
 
-  box-shadow: none;
+  box-shadow:
+    6px 6px 0 #000;
 }
 
 .menuBtn.sub {
 
-  background: #ffffff;
+  background: linear-gradient(
+    #ffffff,
+    #dddddd
+  );
 }
 
 /* ---------- */
@@ -424,7 +431,7 @@ button {
   bottom:
     calc(
       env(safe-area-inset-bottom)
-      + 86px
+      + 48px
     );
 
   width: 100%;
@@ -520,7 +527,7 @@ button:active {
   font-size:
     clamp(34px, 8vw, 48px);
 
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 
   text-align: center;
 
@@ -532,9 +539,9 @@ button:active {
 #resultImage {
 
   width:
-    min(58vw, 220px);
+    min(42vw, 150px);
 
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 
   image-rendering: pixelated;
 }
@@ -546,21 +553,38 @@ button:active {
   font-size:
     clamp(18px, 5vw, 24px);
 
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 
   text-align: center;
 }
 
 .resultButtons {
-
-  width:
-    min(72vw, 300px);
-
+  width: 100%;
   display: flex;
-
   flex-direction: column;
+  gap: 6px;
 
-  gap: 8px;
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+}
+
+.resultButtons.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  transition:
+    opacity 0.45s ease,
+    transform 0.45s ease;
+}
+
+.resultButtons .menuBtn {
+  min-height: 42px;
+  margin-top: 0;
+  padding: 6px 10px;
+  border-width: 4px;
+  font-size: clamp(16px, 4vw, 20px);
+  box-shadow: 4px 4px 0 #000;
 }
 
 /* ---------- */
@@ -578,8 +602,7 @@ button:active {
 
   #resultImage {
 
-    width:
-      min(50vw, 180px);
+    width: 120px;
   }
 
   .menuBtn {
@@ -592,7 +615,7 @@ button:active {
     bottom:
       calc(
         env(safe-area-inset-bottom)
-        + 64px
+        + 32px
       );
   }
 
@@ -614,7 +637,7 @@ button:active {
     bottom:
       calc(
         env(safe-area-inset-bottom)
-        + 48px
+        + 20px
       );
   }
 
@@ -630,7 +653,6 @@ button:active {
 
   #resultImage {
 
-    width:
-      min(46vw, 150px);
+    width: 96px;
   }
 }
